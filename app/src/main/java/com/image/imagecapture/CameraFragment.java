@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -210,6 +211,71 @@ public class CameraFragment extends Fragment implements CameraListener {
                 preview.setSurfaceProvider(cameraActivityBinding.viewFinder.getSurfaceProvider());
                 camera = cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageCapture,videoCapture);
 
+                cameraActivityBinding.cameraCaptureButton.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+                                && ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
+                            try {
+                                if (!videoStatus) {
+                                    videoStatus = true;
+                                    cameraActivityBinding.cameraCaptureButton.setActivated(true);
+                                    // Store the files in the internal memory
+                                    File myPath = getInternalStorageDir(internalStorageDir, videoFormat, Environment.DIRECTORY_MOVIES);
+                                    VideoCapture.OutputFileOptions outputFileOptions = new VideoCapture.OutputFileOptions.Builder(myPath).build();
+                                    Log.d(TAG, "takeVideo: long press");
+                                    startCount();
+                                    videoCapture.startRecording(outputFileOptions, camaraExecutor, new VideoCapture.OnVideoSavedCallback() {
+                                        @Override
+                                        public void onVideoSaved(@NonNull VideoCapture.OutputFileResults outputFileResults) {
+                                            Log.d(TAG, "onVideoSaved: success");
+
+                                            activity.runOnUiThread(() -> {
+                                                try {
+                                                    cameraActivityBinding.submitImg.setVisibility(View.VISIBLE);
+                                                    cameraActivityBinding.previewImage.setVisibility(View.GONE);
+                                                    cameraActivityBinding.cameraLayout.setVisibility(View.GONE);
+                                                    cameraActivityBinding.previewLayout.setVisibility(View.VISIBLE);
+                                                    cameraActivityBinding.previewVideo.setVisibility(View.VISIBLE);
+
+                                                    MediaController mediaController = new MediaController(activity);
+                                                    mediaController.setAnchorView(cameraActivityBinding.previewVideo);
+//                                                    Setting MediaController and URI, then starting the videoView
+                                                    cameraActivityBinding.previewVideo.setMediaController(mediaController);
+                                                    cameraActivityBinding.previewVideo.setVideoURI(outputFileResults.getSavedUri());
+                                                    cameraActivityBinding.previewVideo.requestFocus();
+                                                    cameraActivityBinding.previewVideo.setZOrderOnTop(true);
+                                                    cameraActivityBinding.previewVideo.start();
+
+                                                    cameraActivityBinding.previewVideo.setVideoURI(outputFileResults.getSavedUri());
+
+                                                    imagePath = outputFileResults.getSavedUri().getPath();
+                                                    Log.d(TAG, "onVideoSaved: " + outputFileResults.getSavedUri());
+
+                                                } catch (Exception e) {
+                                                    Log.d(TAG, "onVideoSaved error: " + e.getMessage());
+                                                }
+                                            });
+
+                                        }
+
+                                        @Override
+                                        public void onError(int videoCaptureError, @NonNull String message, @Nullable Throwable cause) {
+                                            Log.d(TAG, "onError: " + message);
+                                            stopRecording();
+                                        }
+                                    });
+                                } else {
+                                    stopRecording();
+                                }
+                            } catch (Exception e) {
+                                Log.d(TAG, "onLlong click catch error: " + e.getMessage());
+                            }
+                        }
+                        return true;
+                    }
+                });
 
             }catch (Exception e){
                 e.printStackTrace();

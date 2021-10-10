@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/capture_button.xml" value="0.3859375" />
+        <entry key="app/src/main/res/drawable/cross_close_icon.xml" value="0.3859375" />
+        <entry key="app/src/main/res/drawable/flash_on_off.xml" value="0.3859375" />
+        <entry key="app/src/main/res/drawable/sent_icon.xml" value="0.3859375" />
+        <entry key="app/src/main/res/drawable/stop_icon.xml" value="0.3859375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3697916666666667" />
         <entry key="app/src/main/res/layout/camera_activity.xml" value="0.3697916666666667" />
       </map>

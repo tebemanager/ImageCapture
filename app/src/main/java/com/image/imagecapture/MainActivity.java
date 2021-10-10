@@ -21,7 +21,9 @@ public class MainActivity extends AppCompatActivity implements CameraFragmentToA
         super.onCreate(savedInstanceState);
         ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
 
-        loadCameraFragment(getSupportFragmentManager(),activityMainBinding.btn1, activityMainBinding.frame);
+        activityMainBinding.btn1.setOnClickListener(v -> {
+            loadCameraFragment(getSupportFragmentManager(),activityMainBinding.btn1, activityMainBinding.frame);
+        });
 
     }
 

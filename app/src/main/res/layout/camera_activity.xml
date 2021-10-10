@@ -36,13 +36,14 @@
                 android:id="@+id/cambackPress"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
                 android:layout_marginStart="@dimen/five_dp"
                 android:layout_marginTop="@dimen/five_dp"
                 android:layout_marginEnd="@dimen/five_dp"
                 android:layout_marginBottom="@dimen/five_dp"
                 android:backgroundTint="@color/white"
                 app:tint="@color/white"
-                android:layout_alignParentEnd="true"
+                android:background="@drawable/cross_close_icon"
                 />
 
             <LinearLayout
@@ -83,16 +84,17 @@
                 android:layout_alignParentBottom="true"
                 android:padding="@dimen/ten_dp"
                 >
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/twty_dp"
-                    app:cardCornerRadius="30dp"
-                    app:contentPadding="@dimen/ten_dp"
-                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/transparant"
                     android:onClick='@{(view) -> cameraListener.flashOnOff(view,flashLight)}'
-                    >
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="0dp"
+                    app:contentPadding="@dimen/ten_dp">
 
                     <ImageView
                         android:id="@+id/flashLight"
@@ -100,6 +102,7 @@
                         android:layout_height="match_parent"
                         android:backgroundTint="@color/white"
                         app:tint="@color/white"
+                        android:background="@drawable/flash_on_off"
                         />
                 </androidx.cardview.widget.CardView>
 
@@ -109,9 +112,12 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_centerInParent="true"
+                    android:background="@drawable/record_button"
                     android:elevation="2dp"
                     android:onClick='@{(view) -> cameraListener.takePicture(view)}'
-                    android:scaleType="fitCenter" />
+                    android:scaleType="fitCenter"
+
+                    />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="50dp"
@@ -120,10 +126,11 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/twty_dp"
                     android:onClick='@{(view) -> cameraListener.changeCamera(view)}'
+                    app:cardBackgroundColor="@color/transparant"
                     app:cardCornerRadius="30dp"
-                    app:contentPadding="@dimen/ten_dp"
                     app:cardElevation="0dp"
-                    >
+                    app:contentPadding="@dimen/ten_dp">
+
                     <ImageView
                         android:id="@+id/switchCamera"
                         android:layout_width="match_parent"
@@ -174,7 +181,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/twty_dp"
                     android:onClick='@{(view) -> cameraListener.closeBackToCam(view)}'
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="@color/transparant"
                     app:cardCornerRadius="30dp"
                     app:contentPadding="@dimen/ten_dp">
 
@@ -182,7 +189,9 @@
                         android:id="@+id/deleteImage"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:tint="@color/white" />
+                        app:tint="@color/white"
+                        app:srcCompat="@drawable/cross_close_icon"
+                        />
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
                     android:id="@+id/submitImg"
@@ -192,17 +201,19 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/twty_dp"
                     android:onClick='@{(view) -> cameraListener.submitClick(view)}'
-                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="30dp"
                     app:contentPadding="@dimen/ten_dp"
                     android:visibility="gone"
+                    app:cardBackgroundColor="@color/transparant"
                     >
 
                     <ImageView
                         android:id="@+id/next_btn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:tint="@color/white" />
+                        app:tint="@color/white"
+                        app:srcCompat="@drawable/sent_icon"
+                        />
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>
 
